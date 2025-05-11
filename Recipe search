@@ -1,0 +1,35 @@
+const recipes = [
+    { id: 1, name: "pulihora", ingredients: ["rice", "groun nuts", "oil", "onions", "pulihora powder"] },
+    { id: 2, name: "Chicken Curry", ingredients: ["chicken", "curry powder", "oil", "onions", "chicken masala"] },
+    { id: 3, name: "vegetable rice", ingredients: ["rice", "oil", "tamota", "beens", "potato"] },
+    { id: 4, name: "idly", ingredients: ["idly powder", "green grams", "salt", "chatny", "sambar"] },
+    { id: 5, name: "upma", ingredients: ["flour", "milk", "eggs", "sugar", "butter"] },
+    { id: 6, name: "egg rice", ingredients: ["eggs","masala","salt","rice","oil"]}
+];
+
+document.addEventListener("DOMContentLoaded", function () {
+    const searchInput = document.getElementById('search');
+    const recipeList = document.getElementById('recipe-list');
+
+    function displayRecipes(recipes) {
+        recipeList.innerHTML = ' ';
+        recipes.forEach(recipe => {
+            const recipeDiv = document.createElement('div');
+            recipeDiv.className = 'recipe';
+            recipeDiv.innerHTML = `<h4>${recipe.name}</h4>  
+            <p>Ingredients: ${recipe.ingredients}</p>`;
+            recipeList.appendChild(recipeDiv);
+            });
+    }   
+
+    function searchRecipes() {
+        const searchText = searchInput.value;
+        const item= recipes.filter(recipe =>
+            recipe.name.toLowerCase().includes(searchText) ||
+            recipe.ingredients.some(ingredient => ingredient.toLowerCase().includes(searchText))
+        );
+        displayRecipes(item);
+    }
+   searchInput.addEventListener('input', searchRecipes);
+   displayRecipes(recipes);
+});
